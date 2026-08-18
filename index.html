@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackArch Linux — Definitive Technical Reference</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #0d0d0d; color: #e8e8e8; margin: 0; padding: 0; }
+  #ba-guide { max-width: 1000px; margin: 0 auto; padding: 16px; }
+
+  .ba-section { display: none; animation: fadeIn 0.25s ease; }
+  .ba-section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .ba-hero { text-align: center; padding: 40px 20px; border-radius: 12px; background: linear-gradient(160deg, rgba(220, 38, 38, 0.12), rgba(255,255,255,0.04)); border: 1px solid rgba(220, 38, 38, 0.3); margin-bottom: 24px; }
+  .ba-hero h1 { font-size: 32px; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.5px; color: #fff; }
+  .ba-hero p { font-size: 15px; color: #a0a0a0; margin: 0; }
+  .ba-hero .tagline { display: inline-block; margin-top: 12px; padding: 4px 14px; border-radius: 20px; background: rgba(220, 38, 38, 0.15); color: #ef4444; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+  .ba-nav { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 24px; }
+  .ba-nav-btn { padding: 8px 14px; border-radius: 6px; border: 1px solid #2a2a2a; background: transparent; color: #888; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.15s; font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace; }
+  .ba-nav-btn:hover { border-color: #ef4444; color: #e8e8e8; }
+  .ba-nav-btn.active { background: rgba(220, 38, 38, 0.15); border-color: #ef4444; color: #ef4444; font-weight: 600; }
+
+  .ba-card { background: #141414; border-radius: 10px; padding: 20px; margin-bottom: 16px; border: 1px solid #222; }
+  .ba-card h2 { font-size: 15px; font-weight: 700; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; color: #fff; }
+  .ba-card h3 { font-size: 14px; font-weight: 600; margin: 18px 0 8px; color: #e8e8e8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ba-card p, .ba-card li { font-size: 14px; line-height: 1.7; color: #b0b0b0; }
+  .ba-card ul { padding-left: 18px; margin: 8px 0; }
+  .ba-card li { margin-bottom: 5px; }
+  .ba-card a { color: #ef4444; text-decoration: none; }
+  .ba-card a:hover { text-decoration: underline; }
+
+  .ba-code { background: #0a0a0a; padding: 12px 16px; border-radius: 8px; font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace; font-size: 12.5px; color: #e8e8e8; overflow-x: auto; margin: 10px 0; border-left: 3px solid #ef4444; position: relative; }
+  .ba-code kbd { background: #333; padding: 1px 5px; border-radius: 3px; font-size: 11px; color: #fff; }
+
+  .ba-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ba-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  @media (max-width: 640px) { .ba-grid-2 { grid-template-columns: 1fr; } }
+
+  .ba-box { padding: 14px; border-radius: 8px; border: 1px solid #222; background: #0f0f0f; }
+  .ba-box h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: #e8e8e8; display: flex; align-items: center; gap: 6px; }
+  .ba-box p { margin: 0; font-size: 13px; color: #888; line-height: 1.6; }
+  .ba-box .meta { font-size: 11px; color: #555; margin-top: 6px; font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace; }
+
+  .ba-warn { background: rgba(234, 179, 8, 0.08); border-left: 3px solid #eab308; padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 10px 0; font-size: 13px; color: #b0b0b0; }
+  .ba-danger { background: rgba(220, 38, 38, 0.08); border-left: 3px solid #ef4444; }
+  .ba-info { background: rgba(59, 130, 246, 0.08); border-left: 3px solid #3b82f6; }
+  .ba-success { background: rgba(34, 197, 94, 0.08); border-left: 3px solid #22c55e; }
+
+  .ba-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+  .ba-table th { text-align: left; padding: 8px 10px; border-bottom: 1px solid #222; color: #666; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+  .ba-table td { padding: 8px 10px; border-bottom: 1px solid #1a1a1a; color: #b0b0b0; }
+  .ba-table tr:hover td { background: #1a1a1a; }
+
+  .ba-search { width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #222; background: #0f0f0f; color: #e8e8e8; font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace; font-size: 13px; margin-bottom: 12px; outline: none; }
+  .ba-search:focus { border-color: #ef4444; }
+  .ba-search::placeholder { color: #555; }
+
+  .ba-cat-chip { display: inline-block; padding: 3px 10px; border-radius: 4px; background: rgba(220, 38, 38, 0.1); color: #ef4444; font-size: 11px; font-weight: 600; font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace; margin: 0 4px 4px 0; cursor: pointer; transition: all 0.15s; }
+  .ba-cat-chip:hover { background: rgba(220, 38, 38, 0.2); }
+  .ba-cat-chip.active { background: #ef4444; color: #fff; }
+
+  .ba-tool-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-bottom: 1px solid #1a1a1a; font-size: 13px; font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace; }
+  .ba-tool-row:hover { background: #1a1a1a; }
+  .ba-tool-name { color: #e8e8e8; font-weight: 600; }
+  .ba-tool-desc { color: #666; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  .ba-tool-pkg { color: #444; font-size: 11px; }
+
+  .ba-step { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+  .ba-step-num { width: 28px; height: 28px; border-radius: 6px; background: rgba(220, 38, 38, 0.15); color: #ef4444; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; border: 1px solid rgba(220, 38, 38, 0.3); font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace; }
+  .ba-step-content { flex: 1; }
+  .ba-step-content h4 { margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #e8e8e8; }
+  .ba-step-content p { margin: 0; font-size: 13px; color: #b0b0b0; line-height: 1.6; }
+
+  .ba-toggle { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #222; font-weight: 600; font-size: 14px; color: #e8e8e8; }
+  .ba-toggle + div { display: none; padding: 10px 0; font-size: 13px; color: #b0b0b0; line-height: 1.7; }
+  .ba-toggle + div.open { display: block; }
+
+  .ba-pill { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 6px; }
+  .ba-pill.red { background: rgba(220, 38, 38, 0.15); color: #ef4444; }
+  .ba-pill.green { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+  .ba-pill.blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+  .ba-pill.gray { background: #1a1a1a; color: #666; }
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<div id="ba-guide">
+
+<div class="ba-hero">
+  <div style="font-size: 42px; margin-bottom: 10px;">&#x1F427;&#x26AB;</div>
+  <h1>BLACK ARCH LINUX</h1>
+  <p>The definitive technical reference. Arch-based penetration testing distribution.<br>Rolling release. 2800+ tools. Zero bloat. Total control.</p>
+  <div class="tagline">Professional / Technical / Uncompromising</div>
+</div>
+
+<div class="ba-nav">
+  <button class="ba-nav-btn active" onclick="baShow(0)">00_Overview</button>
+  <button class="ba-nav-btn" onclick="baShow(1)">01_Install</button>
+  <button class="ba-nav-btn" onclick="baShow(2)">02_Post-Install</button>
+  <button class="ba-nav-btn" onclick="baShow(3)">03_Arsenal</button>
+  <button class="ba-nav-btn" onclick="baShow(4)">04_Workflows</button>
+  <button class="ba-nav-btn" onclick="baShow(5)">05_OPSEC</button>
+  <button class="ba-nav-btn" onclick="baShow(6)">06_Advanced</button>
+  <button class="ba-nav-btn" onclick="baShow(7)">07_Drills</button>
+  <button class="ba-nav-btn" onclick="baShow(8)">08_Intel</button>
+</div>
+
+<!-- SECTION 0: OVERVIEW -->
+<div class="ba-section active" id="ba-sec-0">
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Philosophy & Architecture</h2>
+    <p>BlackArch is not a fork. It is an <strong>unofficial user repository</strong> on top of Arch Linux. You can install it on bare metal, VM, or strap it onto an existing Arch system. It follows the <em>Arch Way</em>: simplicity, user-centrality, openness, freedom.</p>
+    <div class="ba-grid-2" style="margin-top:14px">
+      <div class="ba-box">
+        <h4><span style="color:#22c55e">&#x25B2;</span> BlackArch</h4>
+        <p>Rolling release. Pacman. ~2800+ tools in repo. Install only what you need. AUR access. Bleeding-edge kernel. Minimal footprint. i3/Fluxbox/Xfce or custom WM.</p>
+        <div class="meta">strap.sh | blackman | pacman -S blackarch-*</div>
+      </div>
+      <div class="ba-box">
+        <h4><span style="color:#3b82f6">&#x25B2;</span> Kali Linux</h4>
+        <p>Debian-based. APT. ~600 tools pre-installed. Quarterly releases. Heavier footprint. GNOME default. Predictable, curated, enterprise-friendly.</p>
+        <div class="meta">apt | preinstalled env | stable releases</div>
+      </div>
+    </div>
+    <div class="ba-warn" style="margin-top:12px">
+      <strong>Rule #0:</strong> If you cannot install vanilla Arch from scratch, you are not ready for BlackArch maintenance. Learn Arch first. BlackArch assumes you understand pacman, systemd, mkinitcpio, and partition schemes.
+    </div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> System Requirements</h2>
+    <table class="ba-table">
+      <tr><th>Spec</th><th>Minimum</th><th>Recommended</th><th>Notes</th></tr>
+      <tr><td>CPU</td><td>x86_64</td><td>Multi-core 64-bit</td><td>VM: enable VT-x/AMD-V</td></tr>
+      <tr><td>RAM</td><td>2 GB</td><td>8 GB+</td><td>16 GB for malware analysis / multiple VMs</td></tr>
+      <tr><td>Storage</td><td>20 GB</td><td>120 GB+ SSD</td><td>Full install with all tools = ~60-80 GB</td></tr>
+      <tr><td>Network</td><td>Ethernet</td><td>Ethernet + WiFi monitor mode</td><td>USB WiFi adapter with monitor mode (e.g., Alfa AWUS036ACM)</td></tr>
+      <tr><td>Display</td><td>CLI only</td><td>i3/Xfce/Hyprland</td><td>No DE required. Many pros run headless or tiling WM.</td></tr>
+    </table>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Installation Methods Matrix</h2>
+    <table class="ba-table">
+      <tr><th>Method</th><th>ISO</th><th>Internet</th><th>Time</th><th>Use Case</th></tr>
+      <tr><td>Netinstall ISO</td><td>~700 MB</td><td>Required</td><td>30-60 min</td><td>Recommended. Latest packages. Minimal download.</td></tr>
+      <tr><td>Full ISO</td><td>~20 GB</td><td>Optional</td><td>15-30 min</td><td>Offline install. All tools pre-loaded. Bloated.</td></tr>
+      <tr><td>Slim ISO (GUI)</td><td>~3 GB</td><td>Required</td><td>20-40 min</td><td>Live environment with GUI installer. Beginner-friendly.</td></tr>
+      <tr><td>Strap on Arch</td><td>None</td><td>Required</td><td>10-20 min</td><td>Add BlackArch repos to existing Arch. Cleanest method.</td></tr>
+      <tr><td>Arch Linux ARM</td><td>None</td><td>Required</td><td>Varies</td><td>Raspberry Pi, ARM boards. Install Arch ARM then strap.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 1: INSTALL -->
+<div class="ba-section" id="ba-sec-1">
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Method A: Netinstall ISO (Recommended)</h2>
+    <div class="ba-step">
+      <div class="ba-step-num">1</div>
+      <div class="ba-step-content">
+        <h4>Download & Verify</h4>
+        <p>Get netinstall ISO from blackarch.org/downloads. Verify GPG signature and SHA512.</p>
+        <div class="ba-code">gpg --keyserver hkp://pgp.mit.edu --recv-key 4345771566D761F1<br>gpg --verify blackarch-linux-netinstall-*.iso.sig</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">2</div>
+      <div class="ba-step-content">
+        <h4>Flash USB</h4>
+        <div class="ba-code">sudo dd if=blackarch-linux-netinstall-*.iso of=/dev/sdX bs=4M status=progress && sync</div>
+        <p>Replace /dev/sdX with your actual device. <strong>Do not</strong> use /dev/sda1 (partition). Use whole disk.</p>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">3</div>
+      <div class="ba-step-content">
+        <h4>Boot & Login</h4>
+        <p>Boot from USB. Select architecture (x86_64). At login prompt:</p>
+        <div class="ba-code">login: root<br>password: blackarch</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">4</div>
+      <div class="ba-step-content">
+        <h4>Network Setup</h4>
+        <p>If ethernet: usually auto-DHCP. If WiFi:</p>
+        <div class="ba-code">ip link set wlan0 up<br>iwctl station wlan0 scan<br>iwctl station wlan0 connect "SSID"</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">5</div>
+      <div class="ba-step-content">
+        <h4>Launch Installer</h4>
+        <div class="ba-code">blackarch-install</div>
+        <p>Select: <kbd>1</kbd> Install from repository using pacman &#x2192; <kbd>1</kbd> Quiet &#x2192; set locale/keymap &#x2192; hostname &#x2192; <kbd>1</kbd> Auto DHCP &#x2192; select interface.</p>
+        <div class="ba-warn ba-danger"><strong>CRITICAL:</strong> Before partitioning, press <kbd>Ctrl+C</kbd> to exit installer once, then run: <code>pacman -Sy archlinux-keyring</code> and restart <code>blackarch-install</code>. This prevents chroot passwd failure.</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">6</div>
+      <div class="ba-step-content">
+        <h4>Partitioning (UEFI + GPT)</h4>
+        <p>Use cfdisk. Recommended layout:</p>
+        <div class="ba-code">/dev/sda1  &#x2192;  512M  &#x2192;  EFI System  &#x2192;  /boot<br>/dev/sda2  &#x2192;  2xRAM  &#x2192;  Linux Swap  &#x2192;  [swap]<br>/dev/sda3  &#x2192;  rest   &#x2192;  Linux FS    &#x2192;  /  (ext4/btrfs)</div>
+        <p>For LUKS encryption: select encrypted root during install. Password required on every boot.</p>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">7</div>
+      <div class="ba-step-content">
+        <h4>Finish & Reboot</h4>
+        <p>Set root password, create user, select timezone, choose mirror. For DE: i3 recommended. Skip VM modules if bare metal. Select tool groups or install all. Reboot:</p>
+        <div class="ba-code">reboot</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Method B: Strap onto Existing Arch</h2>
+    <p>The cleanest approach. Install vanilla Arch exactly as you want it, then add BlackArch repos.</p>
+    <div class="ba-code"># Run as root<br>curl -O https://blackarch.org/strap.sh<br>chmod +x strap.sh<br>sudo ./strap.sh<br>sudo pacman -Syyu</div>
+    <div class="ba-warn ba-success">This adds the BlackArch repository to /etc/pacman.conf and imports the signing key. You now have access to all 2800+ tools via pacman.</div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Method C: Slim ISO (GUI Installer)</h2>
+    <p>For those who prefer a graphical Calamares installer. Download Slim ISO, boot live environment, double-click "Install BlackArch" on desktop. Follow GUI prompts. Same partition rules apply.</p>
+  </div>
+</div>
+
+<!-- SECTION 2: POST-INSTALL -->
+<div class="ba-section" id="ba-sec-2">
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> First Boot Configuration</h2>
+    <div class="ba-step">
+      <div class="ba-step-num">1</div>
+      <div class="ba-step-content">
+        <h4>Fix DNS (if no internet)</h4>
+        <div class="ba-code">sudo bash -c &#x27;echo -e "[Resolve]
+DNS=8.8.8.8
+FallbackDNS=1.1.1.1" > /etc/systemd/resolved.conf&#x27;<br>sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf<br>sudo systemctl enable --now systemd-networkd systemd-resolved</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">2</div>
+      <div class="ba-step-content">
+        <h4>Optimize Mirrors</h4>
+        <div class="ba-code">sudo pacman -S reflector<br>sudo reflector --country "Poland,Germany,Netherlands" --protocol https --sort rate --save /etc/pacman.d/mirrorlist<br>sudo pacman -Syyu</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">3</div>
+      <div class="ba-step-content">
+        <h4>Create Sudo User (never run as root)</h4>
+        <div class="ba-code">useradd -m -G wheel -s /bin/bash operator<br>passwd operator<br>EDITOR=nano visudo  # uncomment %wheel ALL=(ALL:ALL) ALL</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">4</div>
+      <div class="ba-step-content">
+        <h4>Install AUR Helper</h4>
+        <div class="ba-code">git clone https://aur.archlinux.org/yay.git /tmp/yay<br>cd /tmp/yay && makepkg -si</div>
+        <p>Or use paru: <code>yay -S paru</code>. AUR contains many security tools not in official repos.</p>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">5</div>
+      <div class="ba-step-content">
+        <h4>Install Core Tool Categories</h4>
+        <div class="ba-code"># View all categories<br>pacman -Sg | grep blackarch<br><br># Install entire categories<br>sudo pacman -S blackarch-recon blackarch-webapp blackarch-scanner blackarch-fuzzer<br><br># Or install everything (not recommended, 60+ GB)<br>sudo pacman -S blackarch</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Pacman & Blackman Reference</h2>
+    <table class="ba-table">
+      <tr><th>Command</th><th>Description</th></tr>
+      <tr><td><code>pacman -Syyu</code></td><td>Full system sync and upgrade (do this first, always)</td></tr>
+      <tr><td><code>pacman -Ss &lt;pkg&gt;</code></td><td>Search repos for package</td></tr>
+      <tr><td><code>pacman -Sg | grep blackarch</code></td><td>List all BlackArch tool categories</td></tr>
+      <tr><td><code>pacman -S blackarch-&lt;cat&gt;</code></td><td>Install entire category</td></tr>
+      <tr><td><code>pacman -Syu --needed --overwrite=&#x27;*&#x27; &lt;pkg&gt;</code></td><td>Force install, resolve conflicts</td></tr>
+      <tr><td><code>blackman -i &lt;pkg&gt;</code></td><td>Build tool from source (PKGBUILD)</td></tr>
+      <tr><td><code>blackman -g &lt;cat&gt;</code></td><td>Build entire category from source</td></tr>
+      <tr><td><code>blackman -a</code></td><td>Build ALL tools from source (hours)</td></tr>
+      <tr><td><code>blackman -l</code></td><td>List categories</td></tr>
+      <tr><td><code>blackman -p &lt;cat&gt;</code></td><td>List packages in category</td></tr>
+    </table>
+    <div class="ba-warn ba-info"><strong>Pro tip:</strong> Always run <code>pacman -Syyu</code> before installing anything. Never run <code>pacman -Sy &lt;pkg&gt;</code> without the <code>-u</code> &#x2014; this causes partial upgrades and breaks Arch.</div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Display & Environment</h2>
+    <div class="ba-grid-2">
+      <div class="ba-box">
+        <h4>i3wm (Recommended)</h4>
+        <p>Lightweight, keyboard-driven, perfect for tiling multiple terminals during engagements.</p>
+        <div class="ba-code">sudo pacman -S i3-wm i3status dmenu rxvt-unicode</div>
+      </div>
+      <div class="ba-box">
+        <h4>Xfce (Balanced)</h4>
+        <p>Traditional DE, low resource usage, familiar layout.</p>
+        <div class="ba-code">sudo pacman -S xfce4 xfce4-goodies lightdm lightdm-gtk-greeter</div>
+      </div>
+    </div>
+    <p style="margin-top:10px; color:#b0b0b0; font-size:14px;">Enable display manager:</p>
+    <div class="ba-code">sudo systemctl enable lightdm  # or sddm, gdm<br>startx  # if no DM, add exec i3 to ~/.xinitrc</div>
+  </div>
+</div>
+
+<!-- SECTION 3: ARSENAL -->
+<div class="ba-section" id="ba-sec-3">
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Tool Arsenal <span class="ba-pill red">2800+</span></h2>
+    <p>BlackArch organizes tools into logical groups. Install by category or cherry-pick individual packages.</p>
+    <input type="text" class="ba-search" id="toolSearch" placeholder="Search tools... (e.g. nmap, burp, metasploit)" oninput="filterTools()">
+    <div id="catFilters" style="margin-bottom:10px">
+      <span class="ba-cat-chip active" onclick="filterCat(&#x27;all&#x27;)">all</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;recon&#x27;)">recon</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;webapp&#x27;)">webapp</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;scanner&#x27;)">scanner</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;wireless&#x27;)">wireless</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;exploitation&#x27;)">exploitation</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;cracker&#x27;)">cracker</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;forensic&#x27;)">forensic</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;reversing&#x27;)">reversing</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;sniffer&#x27;)">sniffer</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;fuzzer&#x27;)">fuzzer</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;social&#x27;)">social</span>
+      <span class="ba-cat-chip" onclick="filterCat(&#x27;crypto&#x27;)">crypto</span>
+    </div>
+    <div id="toolList" style="max-height: 500px; overflow-y: auto; border: 1px solid #222; border-radius: 8px; padding: 4px;">
+    </div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Category Quick Reference</h2>
+    <div class="ba-grid-3">
+      <div class="ba-box"><h4>blackarch-recon</h4><p class="meta">nmap, masscan, amass, theHarvester, recon-ng, maltego</p></div>
+      <div class="ba-box"><h4>blackarch-webapp</h4><p class="meta">burpsuite, nikto, sqlmap, zap-proxy, dirb, gobuster, ffuf</p></div>
+      <div class="ba-box"><h4>blackarch-scanner</h4><p class="meta">openvas, nessus, nuclei, vulners</p></div>
+      <div class="ba-box"><h4>blackarch-wireless</h4><p class="meta">aircrack-ng, wifite, reaver, kismet, bully, pixiewps</p></div>
+      <div class="ba-box"><h4>blackarch-exploitation</h4><p class="meta">metasploit, beef, routersploit, setoolkit</p></div>
+      <div class="ba-box"><h4>blackarch-cracker</h4><p class="meta">hashcat, john, hydra, medusa, crunch, cewl</p></div>
+      <div class="ba-box"><h4>blackarch-forensic</h4><p class="meta">autopsy, sleuthkit, foremost, volatility, bulk_extractor</p></div>
+      <div class="ba-box"><h4>blackarch-reversing</h4><p class="meta">ghidra, radare2, cutter, binwalk, apktool</p></div>
+      <div class="ba-box"><h4>blackarch-sniffer</h4><p class="meta">wireshark, tcpdump, ettercap, dsniff, responder</p></div>
+      <div class="ba-box"><h4>blackarch-fuzzer</h4><p class="meta">wfuzz, ffuf, boofuzz, spike, radamsa</p></div>
+      <div class="ba-box"><h4>blackarch-social</h4><p class="meta">setoolkit, king-phisher, twint, sherlock</p></div>
+      <div class="ba-box"><h4>blackarch-proxy</h4><p class="meta">mitmproxy, burpsuite, zap-proxy, proxify</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: WORKFLOWS -->
+<div class="ba-section" id="ba-sec-4">
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Workflow A: External Network Penetration Test</h2>
+    <div class="ba-step">
+      <div class="ba-step-num">01</div>
+      <div class="ba-step-content">
+        <h4>Reconnaissance & OSINT</h4>
+        <div class="ba-code">amass enum -d target.com -o domains.txt<br>theHarvester -d target.com -b all -f harvest.json<br>subfinder -d target.com -o subs.txt<br>cat subs.txt | httprobe | tee live_hosts.txt</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">02</div>
+      <div class="ba-step-content">
+        <h4>Port Scanning & Service Enumeration</h4>
+        <div class="ba-code">nmap -sC -sV -O -p- --open -iL live_hosts.txt -oA nmap_full<br>masscan -p1-65535 -iL live_hosts.txt --rate=10000 -oG masscan.gnmap<br>nmap --script vuln -p 80,443,8080 -iL live_hosts.txt</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">03</div>
+      <div class="ba-step-content">
+        <h4>Web Application Testing</h4>
+        <div class="ba-code">gobuster dir -u http://target.com -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,txt,html<br>nikto -h http://target.com -o nikto.txt<br>sqlmap -u "http://target.com/page.php?id=1" --dbs --batch<br>ffuf -u http://target.com/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">04</div>
+      <div class="ba-step-content">
+        <h4>Exploitation</h4>
+        <div class="ba-code">searchsploit service version<br>msfconsole -q -x "use exploit/...; set RHOSTS target.com; run"<br>python3 exploit.py --target target.com --payload reverse_shell</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">05</div>
+      <div class="ba-step-content">
+        <h4>Post-Exploitation & Privilege Escalation</h4>
+        <div class="ba-code">linpeas.sh  # Linux Privilege Escalation Awesome Script<br>pspy64  # Monitor cron jobs without root<br>sudo -l  # Check sudo permissions<br>find / -perm -4000 -type f 2>/dev/null  # SUID binaries</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">06</div>
+      <div class="ba-step-content">
+        <h4>Reporting</h4>
+        <p>Document everything: screenshots, command output, proof-of-concept. Use Dradis, Faraday, or plain Markdown + CherryTree.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Workflow B: Wireless Penetration Test</h2>
+    <div class="ba-code"># Identify adapter<br>iwconfig<br><br># Monitor mode<br>sudo airmon-ng check kill<br>sudo airmon-ng start wlan0<br><br># Scan networks<br>sudo airodump-ng wlan0mon<br><br># Capture handshake<br>sudo airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w capture wlan0mon<br>sudo aireplay-ng -0 5 -a AA:BB:CC:DD:EE:FF wlan0mon<br><br># Crack<br>sudo aircrack-ng capture-01.cap -w /usr/share/wordlists/rockyou.txt<br><br># OR automated<br>sudo wifite --dict /usr/share/wordlists/rockyou.txt</div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Workflow C: Active Directory / Red Team</h2>
+    <div class="ba-code"># Enumeration<br>crackmapexec smb 10.10.10.0/24<br>enum4linux -a 10.10.10.10<br>ldapdomaindump 10.10.10.10 -o ldap_dump/<br><br># BloodHound ingestion<br>python3 bloodhound.py -u user -p pass -d domain.local -c All -ns 10.10.10.10<br>neo4j console  # then open BloodHound GUI<br><br># Kerberoasting<br>impacket-GetUserSPNs -request -dc-ip 10.10.10.10 domain.local/user<br>hashcat -m 13100 kerb_hashes.txt /usr/share/wordlists/rockyou.txt<br><br># Pass-the-Hash<br>impacket-psexec -hashes aad3b435b51404eeaad3b435b51404ee:... administrator@10.10.10.10<br><br># Responder for LLMNR/NBT-NS poisoning<br>sudo responder -I eth0 -wrfv</div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Workflow D: Digital Forensics</h2>
+    <div class="ba-code"># Disk imaging (never work on original evidence)<br>sudo dd if=/dev/sdb of=evidence.dd bs=4M status=progress<br>sudo ewfacquire /dev/sdb  # Expert Witness Format<br><br># Analysis<br>autopsy  # GUI forensic browser<br>mmls evidence.dd  # partition layout<br>fls -r evidence.dd  # list deleted files<br>strings evidence.dd | grep -i password  # string extraction<br>foremost -i evidence.dd -o output/  # file carving<br>volatility -f memory.dmp imageinfo  # RAM analysis</div>
+  </div>
+</div>
+
+<!-- SECTION 5: OPSEC -->
+<div class="ba-section" id="ba-sec-5">
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Operational Security</h2>
+    <p>Ethical hacking requires discipline. Your lab leaks metadata. Your ISP logs traffic. Your tools beacon home. Lock it down.</p>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Network Isolation</h2>
+    <div class="ba-grid-2">
+      <div class="ba-box">
+        <h4>Segmented Lab Architecture</h4>
+        <p>Never connect testing VMs directly to your home network. Use a dedicated pentest VLAN or air-gapped hypervisor.</p>
+        <div class="meta">Host-only / NAT / Internal networks in VMware/VirtualBox/KVM</div>
+      </div>
+      <div class="ba-box">
+        <h4>VPN & Tor Routing</h4>
+        <p>Route all engagement traffic through VPN. For OSINT: Tor + proxychains. Never mix identities.</p>
+        <div class="meta">protonvpn / mullvad / torctl / proxychains-ng</div>
+      </div>
+    </div>
+    <div class="ba-code" style="margin-top:12px"># MAC randomization on boot<br>sudo macchanger -r eth0<br><br># Tor routing all traffic<br>sudo torctl start<br>proxychains nmap -sT target.com<br><br># Firewall: block all inbound, allow outbound only through VPN tunnel<br>sudo systemctl enable --now ufw<br>sudo ufw default deny incoming<br>sudo ufw default allow outgoing<br>sudo ufw enable</div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Disk Encryption & Secure Boot</h2>
+    <div class="ba-step">
+      <div class="ba-step-num">1</div>
+      <div class="ba-step-content">
+        <h4>LUKS Full Disk Encryption</h4>
+        <p>Already configured during install? Verify:</p>
+        <div class="ba-code">sudo cryptsetup status luks-xxx<br>lsblk  # verify crypto_LUKS type</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">2</div>
+      <div class="ba-step-content">
+        <h4>Secure Erase & RAM Wipe</h4>
+        <div class="ba-code"># Secure delete single file<br>shred -vfz -n 10 sensitive_file.txt<br><br># Add to kernel cmdline for RAM wipe on shutdown<br>sd-encrypt shutdown=wipe</div>
+      </div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">3</div>
+      <div class="ba-step-content">
+        <h4>Disable USB / Thunderbolt</h4>
+        <div class="ba-code">echo &#x27;install usb-storage /bin/true&#x27; | sudo tee /etc/modprobe.d/disable-usb.conf<br>sudo modprobe -r usb_storage</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Sandboxing & Containment</h2>
+    <div class="ba-code"># Firejail &#x2014; sandbox any app<br>firejail --net=none --private firefox<br>firejail --seccomp drop-all nmap -sT target.com<br><br># Docker for isolated tool environments<br>docker run --rm -it --network none kalilinux/kali-rolling bash<br><br># QEMU/KVM with snapshot rollback<br>qemu-img create -f qcow2 -b base.qcow2 snapshot.qcow2<br># Test malware, exploit dev, untrusted binaries &#x2014; then discard snapshot</div>
+  </div>
+</div>
+
+<!-- SECTION 6: ADVANCED -->
+<div class="ba-section" id="ba-sec-6">
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Troubleshooting Pacman</h2>
+    <div class="ba-toggle" onclick="baToggle(this)">Failed to commit transaction (conflicting files)<span>&#x25BC;</span></div>
+    <div>
+      <div class="ba-code">sudo pacman -Syu --needed --overwrite=&#x27;*&#x27; &lt;package&gt;<br># OR force overwrite specific file<br>sudo pacman -Syu --overwrite /usr/bin/conflicting-file &lt;package&gt;</div>
+    </div>
+    <div class="ba-toggle" onclick="baToggle(this)">Invalid or corrupted package (PGP signature)<span>&#x25BC;</span></div>
+    <div>
+      <div class="ba-code">sudo pacman-key --init<br>sudo pacman-key --populate archlinux blackarch<br>sudo pacman-key --refresh-keys<br>sudo pacman -Syyu</div>
+    </div>
+    <div class="ba-toggle" onclick="baToggle(this)">Target not found (blackarch repo missing)<span>&#x25BC;</span></div>
+    <div>
+      <div class="ba-code"># Re-run strap.sh or verify /etc/pacman.conf contains:<br>[blackarch]<br>Server = https://ftp.harukasan.org/blackarch/$repo/os/$arch<br>SigLevel = Required DatabaseOptional<br><br>sudo pacman -Syyu</div>
+    </div>
+    <div class="ba-toggle" onclick="baToggle(this)">Boot failure after kernel update<span>&#x25BC;</span></div>
+    <div>
+      <div class="ba-code"># Boot from ISO, arch-chroot into install<br>sudo mount /dev/sda3 /mnt<br>sudo mount /dev/sda1 /mnt/boot<br>sudo arch-chroot /mnt<br>pacman -S linux linux-headers<br>mkinitcpio -P<br>grub-mkconfig -o /boot/grub/grub.cfg<br>exit && reboot</div>
+    </div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Kernel Hardening</h2>
+    <div class="ba-code"># /etc/sysctl.d/99-security.conf<br>kernel.dmesg_restrict = 1<br>kernel.kptr_restrict = 2<br>kernel.yama.ptrace_scope = 2<br>fs.protected_hardlinks = 1<br>fs.protected_symlinks = 1<br>net.ipv4.conf.all.rp_filter = 1<br>net.ipv4.conf.all.accept_redirects = 0<br>net.ipv4.conf.all.send_redirects = 0<br>net.ipv4.icmp_echo_ignore_broadcasts = 1<br><br># Apply<br>sudo sysctl --system</div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Btrfs + Snapshots (Rollback Heaven)</h2>
+    <div class="ba-code"># During install, choose btrfs for root<br># Create subvolumes<br>sudo btrfs subvolume create /mnt/@<br>sudo btrfs subvolume create /mnt/@home<br>sudo btrfs subvolume create /mnt/@snapshots<br><br># Snapshot before major changes<br>sudo btrfs subvolume snapshot / /mnt/@snapshots/root_$(date +%Y%m%d)<br><br># Rollback if broken<br>sudo btrfs subvolume delete /<br>sudo btrfs subvolume snapshot /mnt/@snapshots/root_YYYYMMDD /mnt/@<br># Edit fstab, reboot</div>
+    <div class="ba-warn ba-success">Btrfs snapshots are instant and zero-cost. Before every blackarch group install or kernel update, snapshot. If something breaks, rollback in 10 seconds.</div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Custom Live ISO Build</h2>
+    <p>Build your own BlackArch-based live ISO with preconfigured tools, dotfiles, and hardening:</p>
+    <div class="ba-code">sudo pacman -S archiso<br>cp -r /usr/share/archiso/configs/releng/ ~/blackarch-iso<br># Customize packages.x86_64, airootfs/etc/skel/<br>sudo mkarchiso -v -w /tmp/archiso-tmp ~/blackarch-iso</div>
+  </div>
+</div>
+
+<!-- SECTION 7: DRILLS -->
+<div class="ba-section" id="ba-sec-7">
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Training Ground <span class="ba-pill red">Hands-On</span></h2>
+    <p>Reading is not skill. These drills are built for <strong>legal, isolated lab environments only</strong> &#x2014; your own VMs, retired HackTheBox/TryHackMe boxes, Metasploitable2, DVWA, or OWASP Juice Shop. Never point these techniques at systems you don't own or lack written authorization to test.</p>
+    <div class="ba-warn ba-danger"><strong>Scope discipline:</strong> Every drill below assumes an isolated NAT/host-only lab network. If you can't answer "who authorized this scope" in one sentence, you're not ready to run the command.</div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Drill 01 &#x2014; Silent Recon<span class="ba-pill green">Easy</span></h2>
+    <p><strong>Scenario:</strong> A target VM (Metasploitable2) sits somewhere on your lab's /24. You have zero prior information &#x2014; not even an IP.</p>
+    <p><strong>Objective:</strong> Identify the live host, fingerprint the OS, and enumerate every open service without triggering a full noisy SYN flood.</p>
+    <div class="ba-toggle" onclick="baToggle(this)">Show hint<span>&#x25BC;</span></div>
+    <div><p>ARP is your friend on a local segment &#x2014; it doesn't need routing and rarely gets logged the way a full port scan does. Then layer a slower, service-aware scan on just the host you found.</p></div>
+    <div class="ba-toggle" onclick="baToggle(this)">Show reference solution<span>&#x25BC;</span></div>
+    <div><div class="ba-code">sudo arp-scan --localnet<br>nmap -sV -sC -T3 -p- &lt;discovered_ip&gt; -oA drill01</div></div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Drill 02 &#x2014; The Hidden Directory<span class="ba-pill green">Easy</span></h2>
+    <p><strong>Scenario:</strong> DVWA is running on your lab host. The login page is the only thing you can see.</p>
+    <p><strong>Objective:</strong> Find a non-linked admin or setup path without brute-forcing the entire filesystem &#x2014; use a wordlist tuned for the tech stack you fingerprinted first.</p>
+    <div class="ba-toggle" onclick="baToggle(this)">Show hint<span>&#x25BC;</span></div>
+    <div><p>Fingerprint the stack (<code>whatweb</code> or response headers) before you pick a wordlist. A PHP app and a Node app hide files in very different places.</p></div>
+    <div class="ba-toggle" onclick="baToggle(this)">Show reference solution<span>&#x25BC;</span></div>
+    <div><div class="ba-code">whatweb http://target/<br>gobuster dir -u http://target/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -x php</div></div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Drill 03 &#x2014; Inject or Die<span class="ba-pill blue">Medium</span></h2>
+    <p><strong>Scenario:</strong> OWASP Juice Shop, SQLi challenge. A login form is your entry point.</p>
+    <p><strong>Objective:</strong> Bypass authentication with a manual payload first &#x2014; understand <em>why</em> it works &#x2014; before you let sqlmap automate it.</p>
+    <div class="ba-toggle" onclick="baToggle(this)">Show hint<span>&#x25BC;</span></div>
+    <div><p>The classic <code>' OR 1=1--</code> only works if the query isn't parameterized and the comment syntax matches the backend DB. Confirm the DB engine first with an intentional syntax error.</p></div>
+    <div class="ba-toggle" onclick="baToggle(this)">Show reference solution<span>&#x25BC;</span></div>
+    <div><div class="ba-code"># Manual first &#x2014; email field:<br>' OR 1=1--<br><br># Then automate to confirm & extract<br>sqlmap -u "http://target/rest/user/login" --data='{"email":"a","password":"b"}' --batch --dbs</div></div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Drill 04 &#x2014; Crack the Vault<span class="ba-pill blue">Medium</span></h2>
+    <p><strong>Scenario:</strong> You've pulled <code>/etc/shadow</code> from a compromised lab VM via a misconfigured backup script.</p>
+    <p><strong>Objective:</strong> Identify the hash format, then crack at least one account faster than a straight rockyou.txt run &#x2014; think rule-based mutation, not raw brute force.</p>
+    <div class="ba-toggle" onclick="baToggle(this)">Show hint<span>&#x25BC;</span></div>
+    <div><p>hashcat's <code>-a 0</code> with the <code>best64.rule</code> ruleset squeezes far more mileage out of rockyou.txt than a raw dictionary pass. Match the <code>-m</code> mode to the hash prefix ($6$ = sha512crypt).</p></div>
+    <div class="ba-toggle" onclick="baToggle(this)">Show reference solution<span>&#x25BC;</span></div>
+    <div><div class="ba-code">unshadow passwd.txt shadow.txt > combined.txt<br>hashcat -m 1800 -a 0 combined.txt /usr/share/wordlists/rockyou.txt -r /usr/share/hashcat/rules/best64.rule</div></div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Drill 05 &#x2014; Ghost in the LAN<span class="ba-pill red">Hard</span></h2>
+    <p><strong>Scenario:</strong> Your lab AD domain (a free-tier "GOAD" or homemade lab forest) has zero credentials handed to you. Only network access.</p>
+    <p><strong>Objective:</strong> Go from zero creds to a Kerberoastable service account hash, purely through passive/low-noise enumeration &#x2014; no password spraying against lockout policy.</p>
+    <div class="ba-toggle" onclick="baToggle(this)">Show hint<span>&#x25BC;</span></div>
+    <div><p>LLMNR/NBT-NS poisoning nets you NTLMv2 hashes passively. If SMB signing is disabled on any host, that hash can be relayed instead of cracked &#x2014; check with <code>crackmapexec smb --gen-relay-list</code> before you even touch hashcat.</p></div>
+    <div class="ba-toggle" onclick="baToggle(this)">Show reference solution<span>&#x25BC;</span></div>
+    <div><div class="ba-code">sudo responder -I eth0 -wrfv<br># while waiting, passive enum:<br>crackmapexec smb 10.10.10.0/24 --gen-relay-list relay_targets.txt<br># if signing disabled anywhere, relay instead of crack:<br>ntlmrelayx.py -tf relay_targets.txt -smb2support</div></div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Drill 06 &#x2014; Reverse the Binary<span class="ba-pill red">Hard</span></h2>
+    <p><strong>Scenario:</strong> A crackme binary (any of the classic <code>crackmes.one</code> beginner set, downloaded to your isolated analysis VM) asks for a serial key.</p>
+    <p><strong>Objective:</strong> Find the comparison routine and either patch the jump or derive a valid key &#x2014; without running the binary on your host OS.</p>
+    <div class="ba-toggle" onclick="baToggle(this)">Show hint<span>&#x25BC;</span></div>
+    <div><p>Static triage first: <code>file</code> + <code>strings</code> often leaks the check logic or even the key in unstripped binaries. Then load in Ghidra, search for the string cross-reference, and walk backward to the compare instruction.</p></div>
+    <div class="ba-toggle" onclick="baToggle(this)">Show reference solution<span>&#x25BC;</span></div>
+    <div><div class="ba-code">file crackme<br>strings crackme | grep -i -E "correct|wrong|serial|key"<br>ghidra  # open binary, Window > Defined Strings, xref to the check function<br># patch: change JNZ to JZ (or NOP the conditional) in the decompiler view, re-export</div></div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Weekly Capture-the-Flag Ladder</h2>
+    <p>Keep a rotating skill ladder against your own lab. Suggested cadence for staying sharp without burning out:</p>
+    <table class="ba-table">
+      <tr><th>Day</th><th>Focus</th><th>Target Class</th></tr>
+      <tr><td>Mon</td><td>Recon & OSINT</td><td>New Metasploitable/VulnHub box, blind</td></tr>
+      <tr><td>Tue</td><td>Web exploitation</td><td>Juice Shop / DVWA new challenge tier</td></tr>
+      <tr><td>Wed</td><td>Password attacks</td><td>Self-generated hash sets, hashcat benchmarking</td></tr>
+      <tr><td>Thu</td><td>AD / lateral movement</td><td>GOAD or homemade 2-3 host domain</td></tr>
+      <tr><td>Fri</td><td>Reversing / binary</td><td>One crackme, one CTF pwn challenge</td></tr>
+      <tr><td>Weekend</td><td>Report writing</td><td>Write up Mon&#x2013;Fri findings as if for a client</td></tr>
+    </table>
+    <div class="ba-warn ba-info">The report-writing day is not optional. Technical skill without the ability to communicate impact is worth half as much on a real engagement.</div>
+  </div>
+</div>
+
+<!-- SECTION 8: INTEL -->
+<div class="ba-section" id="ba-sec-8">
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Live Tool Radar <span class="ba-pill green">Auto-Updated</span></h2>
+    <p>This feed is refreshed by a scheduled AI agent that watches BlackArch upstream (package additions, changelog, blackarch.org news) and logs what's new, in plain English, the same day it lands. No manual curation lag.</p>
+    <div id="intel-feed">
+      <!-- INTEL_FEED_START -->
+      <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> Feed initialized <span class="ba-pill gray">2026-08-18</span></h4>
+        <p>Tool Radar is live. Each entry below will show a new/updated BlackArch tool, what it does, and the one-liner to install it. Check back daily &#x2014; or watch the repo's commit history for the raw diff.</p>
+      </div>
+      <!-- INTEL_FEED_END -->
+    </div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> Hacker Trivia & Field Tricks</h2>
+    <div class="ba-grid-2">
+      <div class="ba-box">
+        <h4>&#x1F4A1; Did you know</h4>
+        <p>BlackArch's package count crossed 2800 tools not because the maintainers wrote them &#x2014; almost all are thin PKGBUILDs wrapping upstream GitHub projects. The real engineering is the packaging pipeline, not the tools themselves.</p>
+      </div>
+      <div class="ba-box">
+        <h4>&#x1F4A1; Did you know</h4>
+        <p>The default root password on official BlackArch live images is <code>blackarch</code> &#x2014; and it's printed on the login screen for a reason: you're expected to change it, or install to disk, within minutes.</p>
+      </div>
+      <div class="ba-box">
+        <h4>&#x1F527; Trick</h4>
+        <p><code>nmap --top-ports 20 -T4</code> before a full <code>-p-</code> scan gives you an instant "is anything even alive" signal in under 2 seconds per host &#x2014; triage your target list before committing to a slow full scan.</p>
+      </div>
+      <div class="ba-box">
+        <h4>&#x1F527; Trick</h4>
+        <p><code>tmux</code> + <code>tmuxinator</code> to pre-define your entire engagement layout (recon pane, scan pane, notes pane, shell pane) as one YAML file you launch with a single command on every new box.</p>
+      </div>
+      <div class="ba-box">
+        <h4>&#x1F527; Trick</h4>
+        <p>Alias your own recon: <code>alias qscan='nmap -sV -sC -Pn -oN -'</code> in <code>.zshrc</code>. Small frictions removed a hundred times a week compound into hours saved per month.</p>
+      </div>
+      <div class="ba-box">
+        <h4>&#x1F4A1; Did you know</h4>
+        <p>Kerberoasting doesn't require any elevated privileges &#x2014; any authenticated domain user can request a service ticket for any SPN-registered account. The attack is entirely in what you do with the ticket offline.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ba-card">
+    <h2><span style="color:#ef4444">&#x25A0;</span> How This Page Stays Alive</h2>
+    <p>This is not a static document. It's wired to a daily scheduled agent job that:</p>
+    <div class="ba-step">
+      <div class="ba-step-num">1</div>
+      <div class="ba-step-content"><h4>Checks upstream</h4><p>Pulls the latest BlackArch package additions and blackarch.org changelog/news for anything published in the last 24h.</p></div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">2</div>
+      <div class="ba-step-content"><h4>Writes a plain-English entry</h4><p>For each new or notably updated tool: what it is, what category it lives in, and the exact install one-liner &#x2014; appended to the Live Tool Radar feed above.</p></div>
+    </div>
+    <div class="ba-step">
+      <div class="ba-step-num">3</div>
+      <div class="ba-step-content"><h4>Commits and pushes</h4><p>Straight to <code>main</code>, with a descriptive commit message. GitHub Pages picks up the change automatically &#x2014; no manual deploy step.</p></div>
+    </div>
+    <div class="ba-warn ba-success">See <code>AUTOMATION.md</code> in the repo root for the full mechanics, including how to pause, inspect, or take over the automation manually.</div>
+  </div>
+</div>
+
+<script>
+function baShow(n) {
+  document.querySelectorAll('.ba-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ba-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('ba-sec-' + n).classList.add('active');
+  document.querySelectorAll('.ba-nav-btn')[n].classList.add('active');
+}
+function baToggle(el) {
+  const ans = el.nextElementSibling;
+  const arrow = el.querySelector('span');
+  ans.classList.toggle('open');
+  arrow.textContent = ans.classList.contains('open') ? '▲' : '▼';
+}
+
+const tools = [
+  {name:'nmap', cat:'recon', desc:'Network discovery and security auditing', pkg:'nmap'},
+  {name:'masscan', cat:'recon', desc:'TCP port scanner, asynchronous', pkg:'masscan'},
+  {name:'amass', cat:'recon', desc:'In-depth attack surface mapping', pkg:'amass'},
+  {name:'theHarvester', cat:'recon', desc:'Email harvesting and OSINT', pkg:'theharvester'},
+  {name:'recon-ng', cat:'recon', desc:'Web-based OSINT recon framework', pkg:'recon-ng'},
+  {name:'burpsuite', cat:'webapp', desc:'Web vulnerability scanner and proxy', pkg:'burpsuite'},
+  {name:'nikto', cat:'webapp', desc:'Web server scanner', pkg:'nikto'},
+  {name:'sqlmap', cat:'webapp', desc:'Automatic SQL injection', pkg:'sqlmap'},
+  {name:'gobuster', cat:'webapp', desc:'Directory/file/DNS busting', pkg:'gobuster'},
+  {name:'ffuf', cat:'webapp', desc:'Fast web fuzzer', pkg:'ffuf'},
+  {name:'dirb', cat:'webapp', desc:'Web content scanner', pkg:'dirb'},
+  {name:'zap-proxy', cat:'webapp', desc:'OWASP Zed Attack Proxy', pkg:'zaproxy'},
+  {name:'nuclei', cat:'scanner', desc:'Fast vulnerability scanner', pkg:'nuclei'},
+  {name:'openvas', cat:'scanner', desc:'Vulnerability scanning framework', pkg:'openvas'},
+  {name:'nessus', cat:'scanner', desc:'Commercial vulnerability scanner', pkg:'nessus'},
+  {name:'aircrack-ng', cat:'wireless', desc:'802.11 WEP/WPA cracking', pkg:'aircrack-ng'},
+  {name:'wifite', cat:'wireless', desc:'Automated wireless auditor', pkg:'wifite'},
+  {name:'reaver', cat:'wireless', desc:'WPS brute force attack', pkg:'reaver'},
+  {name:'kismet', cat:'wireless', desc:'Wireless network detector', pkg:'kismet'},
+  {name:'bully', cat:'wireless', desc:'WPS brute force', pkg:'bully'},
+  {name:'metasploit', cat:'exploitation', desc:'Exploitation framework', pkg:'metasploit'},
+  {name:'beef', cat:'exploitation', desc:'Browser exploitation framework', pkg:'beef'},
+  {name:'routersploit', cat:'exploitation', desc:'Embedded device exploitation', pkg:'routersploit'},
+  {name:'setoolkit', cat:'exploitation', desc:'Social-engineer toolkit', pkg:'set'},
+  {name:'hashcat', cat:'cracker', desc:'Worlds fastest password cracker', pkg:'hashcat'},
+  {name:'john', cat:'cracker', desc:'John the Ripper password cracker', pkg:'john'},
+  {name:'hydra', cat:'cracker', desc:'Parallelized login cracker', pkg:'hydra'},
+  {name:'medusa', cat:'cracker', desc:'Speedy brute-forcer', pkg:'medusa'},
+  {name:'crunch', cat:'cracker', desc:'Wordlist generator', pkg:'crunch'},
+  {name:'cewl', cat:'cracker', desc:'Custom wordlist generator', pkg:'cewl'},
+  {name:'autopsy', cat:'forensic', desc:'Digital forensics platform', pkg:'autopsy'},
+  {name:'sleuthkit', cat:'forensic', desc:'File system forensic analysis', pkg:'sleuthkit'},
+  {name:'foremost', cat:'forensic', desc:'File carving tool', pkg:'foremost'},
+  {name:'volatility', cat:'forensic', desc:'Memory forensics framework', pkg:'volatility3'},
+  {name:'bulk_extractor', cat:'forensic', desc:'Extracts email, CCs, URLs', pkg:'bulk_extractor'},
+  {name:'ghidra', cat:'reversing', desc:'NSA reverse engineering suite', pkg:'ghidra'},
+  {name:'radare2', cat:'reversing', desc:'Reverse engineering framework', pkg:'radare2'},
+  {name:'cutter', cat:'reversing', desc:'GUI for radare2', pkg:'cutter'},
+  {name:'binwalk', cat:'reversing', desc:'Firmware analysis tool', pkg:'binwalk'},
+  {name:'apktool', cat:'reversing', desc:'Android APK reverse engineering', pkg:'apktool'},
+  {name:'wireshark', cat:'sniffer', desc:'Network protocol analyzer', pkg:'wireshark-qt'},
+  {name:'tcpdump', cat:'sniffer', desc:'Command-line packet analyzer', pkg:'tcpdump'},
+  {name:'ettercap', cat:'sniffer', desc:'Man-in-the-middle suite', pkg:'ettercap'},
+  {name:'dsniff', cat:'sniffer', desc:'Network auditing and penetration testing', pkg:'dsniff'},
+  {name:'responder', cat:'sniffer', desc:'LLMNR/NBT-NS/mDNS poisoner', pkg:'responder'},
+  {name:'wfuzz', cat:'fuzzer', desc:'Web application fuzzer', pkg:'wfuzz'},
+  {name:'boofuzz', cat:'fuzzer', desc:'Network protocol fuzzing', pkg:'boofuzz'},
+  {name:'spike', cat:'fuzzer', desc:'Fuzzer creation kit', pkg:'spike'},
+  {name:'radamsa', cat:'fuzzer', desc:'General purpose fuzzer', pkg:'radamsa'},
+  {name:'sherlock', cat:'social', desc:'Hunt down social media accounts', pkg:'sherlock'},
+  {name:'twint', cat:'social', desc:'Twitter intelligence tool', pkg:'twint'},
+  {name:'king-phisher', cat:'social', desc:'Phishing campaign toolkit', pkg:'king-phisher'},
+  {name:'hash-identifier', cat:'crypto', desc:'Identify hash types', pkg:'hash-identifier'},
+  {name:'johnny', cat:'cracker', desc:'GUI for John the Ripper', pkg:'johnny'},
+  {name:'enum4linux', cat:'recon', desc:'Windows/Samba enumeration', pkg:'enum4linux-ng'},
+  {name:'crackmapexec', cat:'exploitation', desc:'Swiss army knife for pentesting networks', pkg:'crackmapexec'},
+  {name:'bloodhound', cat:'exploitation', desc:'Active Directory visualizer', pkg:'bloodhound'},
+  {name:'impacket', cat:'exploitation', desc:'Network protocol classes', pkg:'impacket'},
+  {name:'linpeas', cat:'exploitation', desc:'Linux privilege escalation checker', pkg:'peass'},
+  {name:'winpeas', cat:'exploitation', desc:'Windows privilege escalation checker', pkg:'peass'},
+  {name:'mimikatz', cat:'exploitation', desc:'Extract plaintext passwords', pkg:'mimikatz'},
+  {name:'subfinder', cat:'recon', desc:'Passive subdomain discovery', pkg:'subfinder'},
+  {name:'httpx', cat:'recon', desc:'Fast HTTP toolkit / probe live hosts', pkg:'httpx'},
+  {name:'arp-scan', cat:'recon', desc:'ARP-based local network discovery', pkg:'arp-scan'},
+  {name:'whatweb', cat:'webapp', desc:'Web technology fingerprinting', pkg:'whatweb'},
+  {name:'wpscan', cat:'webapp', desc:'WordPress vulnerability scanner', pkg:'wpscan'},
+  {name:'mitmproxy', cat:'sniffer', desc:'Interactive HTTPS proxy for traffic inspection', pkg:'mitmproxy'},
+  {name:'proxychains-ng', cat:'social', desc:'Force any TCP app through a proxy chain', pkg:'proxychains-ng'},
+  {name:'searchsploit', cat:'exploitation', desc:'Offline Exploit-DB search utility', pkg:'exploitdb'},
+  {name:'pixiewps', cat:'wireless', desc:'WPS offline pin brute-force via weak entropy', pkg:'pixiewps'},
+  {name:'evil-winrm', cat:'exploitation', desc:'WinRM shell for Windows post-exploitation', pkg:'evil-winrm'},
+];
+
+let activeCat = 'all';
+function renderTools() {
+  const q = document.getElementById('toolSearch').value.toLowerCase();
+  const list = document.getElementById('toolList');
+  list.innerHTML = '';
+  tools.filter(t => (activeCat==='all' || t.cat===activeCat) && (t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.pkg.toLowerCase().includes(q))).forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'ba-tool-row';
+    row.innerHTML = `<div><span class="ba-tool-name">${t.name}</span> <span class="ba-pill gray">${t.cat}</span><br><span class="ba-tool-desc">${t.desc}</span></div><span class="ba-tool-pkg">pacman -S ${t.pkg}</span>`;
+    list.appendChild(row);
+  });
+  if(list.innerHTML==='') list.innerHTML='<div style="padding:20px;text-align:center;color:#555;font-size:13px;">No tools match your criteria.</div>';
+}
+function filterCat(cat) {
+  activeCat = cat;
+  document.querySelectorAll('.ba-cat-chip').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  renderTools();
+}
+function filterTools() { renderTools(); }
+renderTools();
+</script>
+
+</div>
+</body>
+</html>
