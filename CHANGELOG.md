@@ -8,6 +8,11 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-08-24
+
+### Added
+- [auto] Tool Radar: added armitage — PKGBUILD fixed after being broken since 2022 (dead upstream source); now builds from Kali's GitLab mirror with OpenJDK 11 pinned.
+
 ## 2026-08-18
 
 ### Added
