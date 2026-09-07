@@ -610,6 +610,14 @@ FallbackDNS=1.1.1.1" > /etc/systemd/resolved.conf&#x27;<br>sudo ln -sf /run/syst
     <div id="intel-feed">
       <!-- INTEL_FEED_START -->
       <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> wayparam <span class="ba-pill gray">2026-09-06</span></h4>
+        <p>Fetches and normalizes parameterized URLs from the Wayback Machine's CDX API &#x2014; point it at a domain and it pulls every archived URL carrying query parameters, dedupes them, and hands you a clean list for fuzzing or param-mining (same niche as ParamSpider). Bumped to 0.4.0, moving the PKGBUILD source from a GitHub tarball to the PyPI release. Install: <code>pacman -S wayparam</code> (category: blackarch-webapp / blackarch-recon).</p>
+      </div>
+      <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> darkdump <span class="ba-pill gray">2026-09-06</span></h4>
+        <p>OSINT interface for deep-web/Tor search &#x2014; queries dark-web search engines (Ahmia et al.), optionally scrapes hits for emails/metadata/docs, and filters everything against Ahmia's public abuse blacklist. PKGBUILD fixed for Python 3.14 breakage: the venv is now built at package-installation time instead of a post-install hook that could silently fail and leave a broken environment. Install: <code>pacman -S darkdump</code> (category: blackarch-webapp / blackarch-scanner).</p>
+      </div>
+      <div class="ba-box">
         <h4><span style="color:#ef4444">&#x25CF;</span> armitage <span class="ba-pill gray">2026-08-22</span></h4>
         <p>PKGBUILD fixed after being effectively dead since 2022: upstream source (fastandeasyhacking.com) had stopped serving working tarballs, so the package now builds from Kali's maintained GitLab mirror and pins OpenJDK 11 for both build and runtime. If <code>armitage</code> was failing to install or launch for you, this update restores the Metasploit GUI/red-team collaboration front-end. Install: <code>pacman -S armitage</code> (category: blackarch-exploitation).</p>
       </div>

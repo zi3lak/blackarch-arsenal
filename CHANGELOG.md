@@ -8,6 +8,12 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-07
+
+### Added
+- [auto] Tool Radar: added wayparam — Wayback CDX param-mining tool bumped to 0.4.0, useful for building fuzz target lists from archived URLs.
+- [auto] Tool Radar: added darkdump — dark-web OSINT search tool's PKGBUILD fixed for Python 3.14 venv-build breakage.
+
 ## 2026-08-24
 
 ### Added
