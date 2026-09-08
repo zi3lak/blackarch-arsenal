@@ -8,6 +8,11 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-08
+
+### Added
+- [auto] Tool Radar: added xsser — upgraded to 1.9 with fixed dependency declarations, restoring clean installs of the XSS detection/exploitation framework.
+
 ## 2026-09-07
 
 ### Added
