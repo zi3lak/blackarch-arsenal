@@ -8,6 +8,12 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-11
+
+### Added
+- [auto] Tool Radar: added rickshell — new modular Python C2 framework for generating, encoding, catching, and interacting with reverse shells.
+- [auto] Tool Radar: added vulture — new modular RF/SDR analysis platform combining signal processing with AI/ML pipelines.
+
 ## 2026-09-08
 
 ### Added
