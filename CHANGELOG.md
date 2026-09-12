@@ -8,6 +8,12 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-12
+
+### Added
+- [auto] Tool Radar: added aide — new package, the Advanced Intrusion Detection Environment file-integrity checker for detecting host tampering.
+- [auto] Tool Radar: added gitminer — rebased onto maintained Gitminer3 upstream, fixing a GitHub secret-scanning tool that had been building from a dead v2 fork.
+
 ## 2026-09-11
 
 ### Added
