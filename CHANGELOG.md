@@ -8,6 +8,12 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-13
+
+### Added
+- [auto] Tool Radar: added xprobe2 — active OS fingerprinting tool's PKGBUILD fixed (missing C++ header, HTTPS source) and re-added to the release list after being broken.
+- [auto] Tool Radar: added snow — classic whitespace-steganography tool's PKGBUILD fixed after a missing header broke the build, restoring it to the release list.
+
 ## 2026-09-12
 
 ### Added

@@ -610,6 +610,14 @@ FallbackDNS=1.1.1.1" > /etc/systemd/resolved.conf&#x27;<br>sudo ln -sf /run/syst
     <div id="intel-feed">
       <!-- INTEL_FEED_START -->
       <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> xprobe2 <span class="ba-pill gray">2026-09-12</span></h4>
+        <p>Active OS fingerprinting tool that reads ICMP/TCP/UDP probe responses to remotely identify a target's OS, an older signature-based alternative to <code>nmap -O</code> &#x2014; PKGBUILD fixed (missing C++ header, HTTPS source) and put back on the release list after its build had been broken. Install: <code>pacman -S xprobe2</code> (category: blackarch-fingerprint).</p>
+      </div>
+      <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> snow <span class="ba-pill gray">2026-09-12</span></h4>
+        <p>Classic whitespace steganography tool that hides messages in ASCII text by encoding data in trailing spaces/tabs &#x2014; PKGBUILD fixed after a missing header broke compilation, and it's back on the release list. Install: <code>pacman -S snow</code> (category: blackarch-crypto).</p>
+      </div>
+      <div class="ba-box">
         <h4><span style="color:#ef4444">&#x25CF;</span> aide <span class="ba-pill gray">2026-09-11</span></h4>
         <p>New package: Advanced Intrusion Detection Environment &#x2014; snapshots file hashes, permissions, and metadata into a database and flags any drift on re-check, the classic host-based file-integrity/tamper-detection tool. Ships with a systemd service/timer for automated daily runs out of the box. Install: <code>pacman -S aide</code> (category: blackarch-defensive).</p>
       </div>
