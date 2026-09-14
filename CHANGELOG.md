@@ -8,6 +8,11 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-14
+
+### Added
+- [auto] Tool Radar: added ffdec — new package, an open-source SWF (Flash) decompiler/editor for reversing legacy Flash apps and Flash-based malware/exploit payloads.
+
 ## 2026-09-13
 
 ### Added
