@@ -8,6 +8,12 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-15
+
+### Added
+- [auto] Tool Radar: added sasm — cross-platform assembly IDE (NASM/MASM/GAS/FASM) with a build fix and version bump to 3.16.0, restoring it to the release list.
+- [auto] Tool Radar: added memfetch — live userspace process memory dumper for forensics/malware triage, build fix and version bump to 1.02.
+
 ## 2026-09-14
 
 ### Added
