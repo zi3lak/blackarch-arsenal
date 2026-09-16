@@ -8,6 +8,13 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-16
+
+### Added
+- [auto] Tool Radar: added rusthound — new Rust-based Active Directory collector for BloodHound, a faster analog to BloodHound.py for AD attack-path mapping.
+- [auto] Tool Radar: added cloud-audit — new read-only AWS security scanner, 110 checks across 25 services with Terraform remediation per finding.
+- [auto] Tool Radar: added mailcat — new OSINT tool for finding registered email addresses by nickname/username.
+
 ## 2026-09-15
 
 ### Added
