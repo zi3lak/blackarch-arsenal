@@ -8,6 +8,11 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-17
+
+### Added
+- [auto] Tool Radar: added dragonrepo — automated pentest report generator with command tracking and evidence capture, added upstream 2026-09-15 but missed by the prior run; no newer BlackArch upstream activity found as of this run.
+
 ## 2026-09-16
 
 ### Added
