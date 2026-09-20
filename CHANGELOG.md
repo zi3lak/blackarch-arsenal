@@ -8,6 +8,13 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-20
+
+### Added
+- [auto] Tool Radar: added brosec — interactive payload/command reference tool, PKGBUILD patched for a yargs v18 regression that broke argv parsing, restoring the build.
+- [auto] Tool Radar: added wssip — WebSocket intercept/modify/replay proxy, PKGBUILD reworked (explicit electron dep, npm packaging fix) after its build broke.
+- [auto] Tool Radar: added plutil — plist converter, source vendored into the PKGBUILD off a dead external host and install path fixed to stop conflicting with gnustep-base's plutil.
+
 ## 2026-09-17
 
 ### Added

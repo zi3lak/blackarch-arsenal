@@ -610,6 +610,18 @@ FallbackDNS=1.1.1.1" > /etc/systemd/resolved.conf&#x27;<br>sudo ln -sf /run/syst
     <div id="intel-feed">
       <!-- INTEL_FEED_START -->
       <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> brosec <span class="ba-pill gray">2026-09-19</span></h4>
+        <p>Interactive CLI reference for security payloads and one-liners (XSS, SSRF, reverse shells, etc.) &#x2014; build was broken because upstream's yargs dependency hit v18, which dropped the deprecated singleton export that Brosec's argv parsing relied on; PKGBUILD now patches the require call to the explicit factory API, restoring it to the release list. Install: <code>pacman -S brosec</code> (category: blackarch-exploitation).</p>
+      </div>
+      <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> wssip <span class="ba-pill gray">2026-09-19</span></h4>
+        <p>Electron app for intercepting, modifying, and replaying WebSocket traffic between client and server &#x2014; PKGBUILD reworked (explicit electron dependency, git-describe-based versioning, reworked npm packaging) after the build broke, restoring it to the release list. Install: <code>pacman -S wssip</code> (category: blackarch-webapp / blackarch-proxy).</p>
+      </div>
+      <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> plutil <span class="ba-pill gray">2026-09-19</span></h4>
+        <p>Converts Apple .plist files between binary and editable UTF-8 text, useful for iOS/macOS forensics and config tampering &#x2014; source vendored directly into the PKGBUILD (dropping a fetch from a long-dead external host), install path fixed to stop conflicting with gnustep-base's own <code>/usr/bin/plutil</code>, and bumped to v1.6. Install: <code>pacman -S plutil</code> (category: blackarch-misc).</p>
+      </div>
+      <div class="ba-box">
         <h4><span style="color:#ef4444">&#x25CF;</span> dragonrepo <span class="ba-pill gray">2026-09-15</span></h4>
         <p>New package: automated penetration-testing report generator with built-in command tracking and evidence capture &#x2014; logs commands and findings as you work an engagement and renders them into a structured Jinja/Markdown report, cutting down hand-assembled writeup time. Install: <code>pacman -S dragonrepo</code> (category: blackarch-reporting).</p>
       </div>
