@@ -8,6 +8,11 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-21
+
+### Added
+- [auto] Tool Radar: added user-scanner — OSINT username/email scanner, bumped to 1.5.2 with new PDF report generation and MCP server support.
+
 ## 2026-09-20
 
 ### Added

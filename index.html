@@ -610,6 +610,10 @@ FallbackDNS=1.1.1.1" > /etc/systemd/resolved.conf&#x27;<br>sudo ln -sf /run/syst
     <div id="intel-feed">
       <!-- INTEL_FEED_START -->
       <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> user-scanner <span class="ba-pill gray">2026-09-20</span></h4>
+        <p>OSINT tool that checks username/email presence across multiple platforms for recon and investigation work &#x2014; bumped to 1.5.2 with PDF report generation (reportlab/pillow/svglib) and MCP (Model Context Protocol) server support added as new dependencies, so scan output can feed straight into a writeup or an LLM-agent workflow. Install: <code>pacman -S user-scanner</code> (category: blackarch-recon / blackarch-scanner).</p>
+      </div>
+      <div class="ba-box">
         <h4><span style="color:#ef4444">&#x25CF;</span> brosec <span class="ba-pill gray">2026-09-19</span></h4>
         <p>Interactive CLI reference for security payloads and one-liners (XSS, SSRF, reverse shells, etc.) &#x2014; build was broken because upstream's yargs dependency hit v18, which dropped the deprecated singleton export that Brosec's argv parsing relied on; PKGBUILD now patches the require call to the explicit factory API, restoring it to the release list. Install: <code>pacman -S brosec</code> (category: blackarch-exploitation).</p>
       </div>
