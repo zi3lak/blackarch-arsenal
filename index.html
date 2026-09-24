@@ -610,6 +610,10 @@ FallbackDNS=1.1.1.1" > /etc/systemd/resolved.conf&#x27;<br>sudo ln -sf /run/syst
     <div id="intel-feed">
       <!-- INTEL_FEED_START -->
       <div class="ba-box">
+        <h4><span style="color:#ef4444">&#x25CF;</span> wayparam <span class="ba-pill gray">2026-09-23</span></h4>
+        <p>OSINT parameter-discovery tool (ParamSpider-inspired) that pulls historical URLs from the Wayback Machine's CDX API and normalizes query parameters, surfacing endpoints worth fuzzing without ever touching the live target &#x2014; bumped to 1.0.0, its first stable release, with a rewrite onto async I/O (python-httpx) and tighter filtering of static-asset noise. Install: <code>pacman -S wayparam</code> (category: blackarch-webapp / blackarch-recon).</p>
+      </div>
+      <div class="ba-box">
         <h4><span style="color:#ef4444">&#x25CF;</span> user-scanner <span class="ba-pill gray">2026-09-20</span></h4>
         <p>OSINT tool that checks username/email presence across multiple platforms for recon and investigation work &#x2014; bumped to 1.5.2 with PDF report generation (reportlab/pillow/svglib) and MCP (Model Context Protocol) server support added as new dependencies, so scan output can feed straight into a writeup or an LLM-agent workflow. Install: <code>pacman -S user-scanner</code> (category: blackarch-recon / blackarch-scanner).</p>
       </div>

@@ -8,6 +8,11 @@ Entries tagged `[auto]` were written and committed by the scheduled daily agent 
 
 Nothing yet — the daily agent will append here.
 
+## 2026-09-24
+
+### Added
+- [auto] Tool Radar: added wayparam — Wayback CDX parameter-discovery tool hit its first stable release (1.0.0), rewritten onto async I/O with tighter noise filtering.
+
 ## 2026-09-21
 
 ### Added
